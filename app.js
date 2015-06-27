@@ -12,6 +12,10 @@ var host = "http://localhost:8000/"
 var get = function(req, res) {
   URL.findOne({alias: req.params.alias}, function(err, url){
     if(err || !url) return res.send(404);
+    url.clicks++
+    url.save(function(err) {
+      if(err) console.log(err);
+    });
     return res.redirect(302, url.url);
   });
 }
